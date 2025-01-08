@@ -10,9 +10,9 @@ import 'package:global_textfield/global_textfield_widget/enums/global_textfield_
 
 class MyExampleGlobalTextfield extends StatelessWidget {
   final form = FormGroup({
-    // 'textField': FormControl<String>(validators: [Validators.required]),
-    // // 'numberField': FormControl<String>(
-    // //     validators: [Validators.required, Validators.number()]),
+    'textField': FormControl<String>(validators: [Validators.required]),
+    'numberField': FormControl<String>(
+        validators: [Validators.required, Validators.number()]),
     'textareaField': FormControl<String>(
       validators: [Validators.required, Validators.minLength(10)],
     ),
@@ -20,13 +20,13 @@ class MyExampleGlobalTextfield extends StatelessWidget {
     'employeesField': FormControl<String>(validators: [Validators.required]),
   });
 
-  // FormControl<String> get generalGroupTitleControl {
-  //   return form.control('textField') as FormControl<String>;
-  // }
+  FormControl<String> get generalGroupTitleControl {
+    return form.control('textField') as FormControl<String>;
+  }
 
-  // FormControl<String> get numberGroupTitleControl {
-  //   return form.control('numberField') as FormControl<String>;
-  // }
+  FormControl<String> get numberGroupTitleControl {
+    return form.control('numberField') as FormControl<String>;
+  }
 
   FormControl<String> get textareaGroupTitleControl {
     return form.control('textareaField') as FormControl<String>;
@@ -101,12 +101,40 @@ class MyExampleGlobalTextfield extends StatelessWidget {
                     Row(children: [Icon(Icons.abc), Text(item.data.name)])),
             SizedBox(height: 16),
             GlobalField.input(
+              maxLines: 5,
               onChanged: (control) {},
+              decorationOverride: InputDecoration(
+                prefixIcon: Icon(Icons.abc),
+                suffixIcon: Icon(Icons.abc),
+                helperText: 'Helper Text',
+                hintText: 'Hint Text',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               formController: textareaGroupTitleControl,
               fieldType: GlobalInputFieldType.text,
               design: GlobalInputFieldDesign.floatingLabelOutlinedDesign,
-              labelText: 'Textarea Field',
+              labelText: 'description Field',
             ),
+            SizedBox(height: 16),
+            GlobalField.input(
+              onChanged: (control) {},
+              formController: generalGroupTitleControl,
+              fieldType: GlobalInputFieldType.textarea,
+              design: GlobalInputFieldDesign.filledGreyDesign,
+              labelText: ' text Field',
+            ),
+            SizedBox(height: 16),
+            GlobalField.input(
+              onChanged: (control) {},
+              formController: numberGroupTitleControl,
+              fieldType: GlobalInputFieldType.number,
+              design: GlobalInputFieldDesign.minimalOutlinedDesign,
+              labelText: 'number Field',
+            ),
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 if (form.valid) {
